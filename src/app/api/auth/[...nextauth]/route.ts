@@ -1,8 +1,8 @@
-import NextAuth from 'next-auth';
+import NextAuth from 'next-auth/next';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { loginUser } from '@/lib/actions/user.actions';
 
-export const handler = NextAuth({
+const authOptions = {
   providers: [
     CredentialsProvider({
       name: 'Credentials',
@@ -19,7 +19,6 @@ export const handler = NextAuth({
             return null;
           }
         }
-
         return null;
       },
     }),
@@ -43,6 +42,9 @@ export const handler = NextAuth({
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
-});
+};
 
-export { handler as GET, handler as POST };
+const handler = NextAuth(authOptions);
+
+export const GET = handler;
+export const POST = handler;
